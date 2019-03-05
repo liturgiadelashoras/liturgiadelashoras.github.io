@@ -1,0 +1,52 @@
+body, div {
+  font-family: Verdana, Arial;
+  font-size: 1.1em;
+  background-color: #ffffcc;
+}
+
+a:link {
+  text-decoration: none;
+  color: #0000ff;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #0000ff;
+}
+
+a:hover {
+  text-decoration: none;
+  color: red;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+table, th, td {
+  border: 1px solid black;
+  font-size: 1.2em;
+  text-align: center;
+  background-color: #ccccc2;
+  background-image: url('https://liturgiadelashoras.github.io/sync/images/fnd.jpg');
+  background-repeat: repeat-x;
+  visibility: visible;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-style: normal;
+}
+
+.titulo {
+  border: 1px solid black;
+  color: #ffffff;
+  font-size: 1.2em;
+  background-color: #00bbff;
+  background-image: none;
+  border: none;
+  visibility: visible;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-style: normal;
+}
+
+.normal {
+  font-family: Verdana, Arial
+}
