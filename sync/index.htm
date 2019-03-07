@@ -1,12 +1,145 @@
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<html>
 
 <head>
   <title>Liturgia de las Horas</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-  <link href="css/calendar.css" type="text/css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Verdana, Arial;
+      font-size: 1.1em;
+      background-color: #ffffcc;
+    }
+    a:link {
+      text-decoration: none;
+      color: blue;
+    }
+    a:visited {
+      text-decoration: none;
+      color: blue;
+    }
+    a:hover {
+      text-decoration: none;
+      color: white;
+    }
+    a:active {
+      text-decoration: none;
+    }
+    a.sunday:link {
+      text-decoration: none;
+      color: red;
+    }
+    a.sunday:visited {
+      text-decoration: none;
+      color: red;
+    }
+    a.sunday:hover {
+      text-decoration: none;
+      color: white;
+    }
+    a.sunday:active {
+      text-decoration: none;
+    }
+    a.special:link {
+      text-decoration: none;
+      color: white;
+    }
+    a.special:visited {
+      text-decoration: none;
+      color: white;
+    }
+    a.special:hover {
+      text-decoration: none;
+      color: white;
+    }
+    a.special:active {
+      text-decoration: none;
+    }
+    table, th, td {
+      border: 1px solid black;
+      font-size: 1.2em;
+      text-align: center;
+      background-color: #ccccc2;
+      background-image: url('https://liturgiadelashoras.github.io/sync/images/fnd.jpg');
+      background-repeat: repeat-x;
+      visibility: visible;
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      font-style: normal;
+    }
+    .calendar {
+      max-width: 344px;
+      margin: 0px auto;
+    }
+    .calendar_day {
+      width: 9%;
+      box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+      background-color: #ccccc2;
+      background-image: url('https://liturgiadelashoras.github.io/sync/images/fnd.jpg');
+      background-repeat: repeat-x;
+      line-height: 50%;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      margin: 3px;
+      text-align: center;
+      display: inline-block;
+      border-radius: 8px;
+    }
+    .calendar_day:hover {
+      background-color: #808080;
+      background-image: none;
+      color: white;
+      cursor: pointer;
+    }
+    .calendar_day_header {
+      width: 9%;
+      box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+      background-color: #ccccc2;
+      background-image: url('https://liturgiadelashoras.github.io/sync/images/fnd.jpg');
+      background-repeat: repeat-x;
+      line-height: 50%;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      margin: 3px;
+      text-align: center;
+      display: inline-block;
+      border-radius: 8px;
+    }
+    .calendar_day_empty {
+      width: 9%;
+      line-height: 50%;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      margin: 3px;
+      text-align: center;
+      display: inline-block;
+      border-radius: 8px;
+    }
+    .calendar_day_special {
+      background-color: #808080;
+      background-image: none;
+      box-shadow: 0px 2px 1px 0px black;
+    }
+    .months {
+      text-align: center;
+      width: 100%;
+      overflow: hidden;
+      color: red;
+    }
+    .month {
+      color: red;
+      cursor: pointer;
+      display: inline-block;
+      margin: 15px;
+      text-decoration: underline;
+    }
+  </style>
   <script type="text/javascript" src="js/calendar.js"></script>
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
