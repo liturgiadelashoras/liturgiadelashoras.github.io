@@ -56,6 +56,21 @@
     a.special:active {
       text-decoration: none;
     }
+    a.next_month:link {
+      text-decoration: none;
+      color: gray;
+    }
+    a.next_month:visited {
+      text-decoration: none;
+      color: gray;
+    }
+    a.next_month:hover {
+      text-decoration: none;
+      color: white;
+    }
+    a.next_month:active {
+      text-decoration: none;
+    }
     table, th, td {
       border: 1px solid black;
       font-size: 1.2em;
@@ -140,7 +155,121 @@
       text-decoration: underline;
     }
   </style>
-  <script type="text/javascript" src="js/calendar.js"></script>
+  <script type="text/javascript">
+    var today = new Date();
+
+    window.onload = function() {
+      createCalendarMonth(today.getMonth());
+    };
+
+    function createCalendarMonth(month) {
+      var title = document.getElementById("title");
+      title.innerHTML = "Liturgia de las Horas - " + monthAsString(month) + " de " + today.getFullYear();
+
+      clearCalendar();
+      var currentCalendar = document.getElementById("calendar");
+
+      var date_i = new Date();
+      date_i.setDate(1);
+      date_i.setMonth(month);
+      date_i.setYear(date_i.getFullYear());
+
+      createDaysEmpty(date_i.getDay());
+      do {
+        createCalendarDay(date_i.getDate(), date_i.getMonth());
+        date_i.setDate(date_i.getDate() + 1);
+      } while (date_i.getDate() != 1)
+      createDaysNextMonth(date_i);
+    }
+
+    function clearCalendar() {
+      var currentCalendar = document.getElementById("calendar");
+
+      currentCalendar.innerHTML = "";
+
+      for (i = 0; i < 7; i++) {
+        var newDay = document.createElement("div");
+        var dayElement = document.createElement("p");
+
+        dayElement.innerHTML = dayOfWeekAsString(i);
+        newDay.className = "calendar_day_header";
+        newDay.appendChild(dayElement);
+
+        currentCalendar.appendChild(newDay);
+      }
+    }
+
+    function createDaysEmpty(days) {
+      var currentCalendar = document.getElementById("calendar");
+
+      for (i = 0; i < days; i++) {
+        var newDay = document.createElement("div");
+        var date = document.createElement("a");
+        var dayElement = document.createElement("p");
+
+        newDay.className = "calendar_day_empty";
+        newDay.appendChild(date);
+        newDay.appendChild(dayElement);
+        currentCalendar.appendChild(newDay);
+      }
+    }
+
+    function createDaysNextMonth(date_i) {
+      while (date_i.getDay() != 0) {
+        createCalendarDay(date_i.getDate(), date_i.getMonth());
+        date_i.setDate(date_i.getDate() + 1);
+      }
+    }
+
+    function createCalendarDay(day, month) {
+      var calendar = document.getElementById("calendar");
+      var div = document.createElement("div");
+      var p = document.createElement("p");
+      var a = document.createElement("a");
+
+      a.innerHTML = day;
+      a.href = today.getFullYear() + "/" + monthAsLink(month) + "/" + dayAsLink(day) + "/index.htm";
+
+      var currentDate = new Date();
+      currentDate.setDate(day);
+      currentDate.setMonth(month);
+      if (currentDate.getDay() == 0) {
+        a.className = "sunday";
+      }
+
+      if (day == today.getDate() && month == today.getMonth()) {
+        div.className = "calendar_day calendar_day_special";
+        a.className = "special";
+      } else if (month != today.getMonth()) {
+        div.className = "calendar_day";
+        a.className = "next_month";
+      } else {
+        div.className = "calendar_day";
+      }
+      p.appendChild(a);
+      div.appendChild(p);
+      calendar.appendChild(div);
+    }
+
+    function monthAsString(monthIndex) {
+      return ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"][monthIndex];
+    }
+
+    function monthAsLink(monthIndex) {
+      return ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"][monthIndex];
+    }
+
+    function dayOfWeekAsString(dayIndex) {
+      return ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"][dayIndex];
+    }
+
+    function dayAsLink(day) {
+      if (day < 10)
+        return "0" + day;
+      else
+        return "" + day;
+    }
+  </script>
   <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
   <link rel="apple-touch-icon" sizes="57x57" href="images/apple-touch-icon-57x57.png" />
@@ -161,151 +290,7 @@
     </tr>
   </table>
   <br />
-  <div class="calendar" id="calendar">
-    <div class="calendar_day_header">
-      <p>Do</p>
-    </div>
-    <div class="calendar_day_header">
-      <p>Lu</p>
-    </div>
-    <div class="calendar_day_header">
-      <p>Ma</p>
-    </div>
-    <div class="calendar_day_header">
-      <p>Mi</p>
-    </div>
-    <div class="calendar_day_header">
-      <p>Ju</p>
-    </div>
-    <div class="calendar_day_header">
-      <p>Vi</p>
-    </div>
-    <div class="calendar_day_header">
-      <p>Sa</p>
-    </div>
-    <div class="calendar_day_empty"><a></a>
-      <p></p>
-    </div>
-    <div class="calendar_day_empty"><a></a>
-      <p></p>
-    </div>
-    <div class="calendar_day_empty"><a></a>
-      <p></p>
-    </div>
-    <div class="calendar_day_empty"><a></a>
-      <p></p>
-    </div>
-    <div class="calendar_day_empty"><a></a>
-      <p></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/01/index.htm">1</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/02/index.htm">2</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/03/index.htm" class="sunday">3</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/04/index.htm">4</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/05/index.htm">5</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/06/index.htm">6</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/07/index.htm">7</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/08/index.htm">8</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/09/index.htm">9</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/10/index.htm" class="sunday">10</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/11/index.htm">11</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/12/index.htm">12</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/13/index.htm">13</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/14/index.htm">14</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/15/index.htm">15</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/16/index.htm">16</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/17/index.htm" class="sunday">17</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/18/index.htm">18</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/19/index.htm">19</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/20/index.htm">20</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/21/index.htm">21</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/22/index.htm">22</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/23/index.htm">23</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/24/index.htm" class="sunday">24</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/25/index.htm">25</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/26/index.htm">26</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/27/index.htm">27</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/28/index.htm">28</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/29/index.htm">29</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/30/index.htm">30</a></p>
-    </div>
-    <div class="calendar_day">
-      <p><a href="2019/mar/31/index.htm" class="sunday">31</a></p>
-    </div>
-  </div>
-  <!--div class="months">
-    <div class="month" onclick="createCalendarMonth(0);">Enero</div>
-    <div class="month" onclick="createCalendarMonth(1);">Febrero</div>
-    <div class="month" onclick="createCalendarMonth(2);">Marzo</div>
-    <div class="month" onclick="createCalendarMonth(3);">Abril</div>
-    <div class="month" onclick="createCalendarMonth(4);">Mayo</div>
-    <div class="month" onclick="createCalendarMonth(5);">Junio</div>
-    <div class="month" onclick="createCalendarMonth(6);">Julio</div>
-    <div class="month" onclick="createCalendarMonth(7);">Agosto</div>
-    <div class="month" onclick="createCalendarMonth(8);">Septiembre</div>
-    <div class="month" onclick="createCalendarMonth(9);">Octubre</div>
-    <div class="month" onclick="createCalendarMonth(10);">Noviembre</div>
-    <div class="month" onclick="createCalendarMonth(11);">Diciembre</div>
-  </div-->
+  <div class="calendar" id="calendar"><div class="calendar_day_header"><p>Do</p></div><div class="calendar_day_header"><p>Lu</p></div><div class="calendar_day_header"><p>Ma</p></div><div class="calendar_day_header"><p>Mi</p></div><div class="calendar_day_header"><p>Ju</p></div><div class="calendar_day_header"><p>Vi</p></div><div class="calendar_day_header"><p>Sa</p></div><div class="calendar_day_empty"><a></a><p></p></div><div class="calendar_day_empty"><a></a><p></p></div><div class="calendar_day_empty"><a></a><p></p></div><div class="calendar_day_empty"><a></a><p></p></div><div class="calendar_day_empty"><a></a><p></p></div><div class="calendar_day"><p><a href="2019/mar/01">1</a></p></div><div class="calendar_day"><p><a href="2019/mar/02">2</a></p></div><div class="calendar_day"><p><a href="2019/mar/03" class="sunday">3</a></p></div><div class="calendar_day"><p><a href="2019/mar/04">4</a></p></div><div class="calendar_day"><p><a href="2019/mar/05">5</a></p></div><div class="calendar_day"><p><a href="2019/mar/06">6</a></p></div><div class="calendar_day"><p><a href="2019/mar/07">7</a></p></div><div class="calendar_day"><p><a href="2019/mar/08">8</a></p></div><div class="calendar_day"><p><a href="2019/mar/09">9</a></p></div><div class="calendar_day"><p><a href="2019/mar/10" class="sunday">10</a></p></div><div class="calendar_day"><p><a href="2019/mar/11">11</a></p></div><div class="calendar_day"><p><a href="2019/mar/12">12</a></p></div><div class="calendar_day"><p><a href="2019/mar/13">13</a></p></div><div class="calendar_day"><p><a href="2019/mar/14">14</a></p></div><div class="calendar_day"><p><a href="2019/mar/15">15</a></p></div><div class="calendar_day"><p><a href="2019/mar/16">16</a></p></div><div class="calendar_day"><p><a href="2019/mar/17" class="sunday">17</a></p></div><div class="calendar_day"><p><a href="2019/mar/18">18</a></p></div><div class="calendar_day"><p><a href="2019/mar/19">19</a></p></div><div class="calendar_day"><p><a href="2019/mar/20">20</a></p></div><div class="calendar_day"><p><a href="2019/mar/21">21</a></p></div><div class="calendar_day"><p><a href="2019/mar/22">22</a></p></div><div class="calendar_day"><p><a href="2019/mar/23">23</a></p></div><div class="calendar_day"><p><a href="2019/mar/24" class="sunday">24</a></p></div><div class="calendar_day"><p><a href="2019/mar/25">25</a></p></div><div class="calendar_day"><p><a href="2019/mar/26">26</a></p></div><div class="calendar_day"><p><a href="2019/mar/27">27</a></p></div><div class="calendar_day"><p><a href="2019/mar/28">28</a></p></div><div class="calendar_day"><p><a href="2019/mar/29">29</a></p></div><div class="calendar_day"><p><a href="2019/mar/30">30</a></p></div><div class="calendar_day"><p><a href="2019/mar/31" class="sunday">31</a></p></div><div class="calendar_day"><p><a href="2019/abr/01" class="next_month">1</a></p></div><div class="calendar_day"><p><a href="2019/abr/02" class="next_month">2</a></p></div><div class="calendar_day"><p><a href="2019/abr/03" class="next_month">3</a></p></div><div class="calendar_day"><p><a href="2019/abr/04" class="next_month">4</a></p></div><div class="calendar_day"><p><a href="2019/abr/05" class="next_month">5</a></p></div><div class="calendar_day"><p><a href="2019/abr/06" class="next_month">6</a></p></div></div>
 </body>
 
 </html>

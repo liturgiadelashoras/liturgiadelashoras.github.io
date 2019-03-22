@@ -61,6 +61,25 @@ a.special:active {
   text-decoration: none;
 }
 
+a.next_month:link {
+  text-decoration: none;
+  color: gray;
+}
+
+a.next_month:visited {
+  text-decoration: none;
+  color: gray;
+}
+
+a.next_month:hover {
+  text-decoration: none;
+  color: white;
+}
+
+a.next_month:active {
+  text-decoration: none;
+}
+
 table, th, td {
   border: 1px solid black;
   font-size: 1.2em;

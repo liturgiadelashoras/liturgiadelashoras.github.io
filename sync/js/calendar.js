@@ -21,6 +21,7 @@ function createCalendarMonth(month) {
     createCalendarDay(date_i.getDate(), date_i.getMonth());
     date_i.setDate(date_i.getDate() + 1);
   } while (date_i.getDate() != 1)
+  createDaysNextMonth(date_i);
 }
 
 function clearCalendar() {
@@ -55,6 +56,13 @@ function createDaysEmpty(days) {
   }
 }
 
+function createDaysNextMonth(date_i) {
+  while (date_i.getDay() != 0) {
+    createCalendarDay(date_i.getDate(), date_i.getMonth());
+    date_i.setDate(date_i.getDate() + 1);
+  }
+}
+
 function createCalendarDay(day, month) {
   var calendar = document.getElementById("calendar");
   var div = document.createElement("div");
@@ -74,6 +82,9 @@ function createCalendarDay(day, month) {
   if (day == today.getDate() && month == today.getMonth()) {
     div.className = "calendar_day calendar_day_special";
     a.className = "special";
+  } else if (month != today.getMonth()) {
+    div.className = "calendar_day";
+    a.className = "next_month";
   } else {
     div.className = "calendar_day";
   }
