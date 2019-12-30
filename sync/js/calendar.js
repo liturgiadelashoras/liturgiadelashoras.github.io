@@ -18,7 +18,7 @@ function createCalendarMonth(month) {
 
   createDaysEmpty(date_i.getDay());
   do {
-    createCalendarDay(date_i.getDate(), date_i.getMonth());
+    createCalendarDay(date_i.getFullYear(), date_i.getDate(), date_i.getMonth());
     date_i.setDate(date_i.getDate() + 1);
   } while (date_i.getDate() != 1)
   createDaysNextMonth(date_i);
@@ -58,19 +58,19 @@ function createDaysEmpty(days) {
 
 function createDaysNextMonth(date_i) {
   while (date_i.getDay() != 0) {
-    createCalendarDay(date_i.getDate(), date_i.getMonth());
+    createCalendarDay(date_i.getFullYear(), date_i.getDate(), date_i.getMonth());
     date_i.setDate(date_i.getDate() + 1);
   }
 }
 
-function createCalendarDay(day, month) {
+function createCalendarDay(year, day, month) {
   var calendar = document.getElementById("calendar");
   var div = document.createElement("div");
   var p = document.createElement("p");
   var a = document.createElement("a");
 
   a.innerHTML = day;
-  a.href = today.getFullYear() + "/" + monthAsLink(month) + "/" + dayAsLink(day) + "/index.htm";
+  a.href = year + "/" + monthAsLink(month) + "/" + dayAsLink(day) + "/index.htm";
 
   var currentDate = new Date();
   currentDate.setDate(day);
